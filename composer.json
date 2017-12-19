@@ -7,7 +7,7 @@
         {
             "name": "Ryan Doss",
             "email": "rd@buildmidwestern.com"
-        },
+        }
     ],
     "require": {
         "bugsnag/bugsnag-laravel": "^2.0",
