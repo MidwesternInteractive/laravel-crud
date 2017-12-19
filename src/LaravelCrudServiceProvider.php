@@ -4,7 +4,7 @@ namespace MWI\LaravelCrud;
 
 use Illuminate\Support\ServiceProvider;
 
-class LaravelKitServiceProvider extends ServiceProvider
+class LaravelCrudServiceProvider extends ServiceProvider
 {
     public function boot()
     {
