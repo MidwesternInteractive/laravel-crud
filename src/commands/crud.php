@@ -73,12 +73,6 @@ class Crud extends Command
             $this->comment($new_file . ' created');
         }
 
-        foreach (['view', 'create', 'edit', 'delete'] as $permission) {
-            if (empty(Permission::where('name', $permission . ' ' . strtolower($this->model))->first())) {
-                Permission::create(['name' => $permission . ' ' . strtolower($this->model)]);
-            }
-        }
-
         $this->comment($this->model . ' is all set up.');
     }
 }
