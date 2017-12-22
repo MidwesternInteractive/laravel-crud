@@ -66,7 +66,17 @@ class Crud extends Command
             }
 
             if (!file_exists(base_path($new_file))) {
-                $data = str_replace(['Model', ' model', '$model'], [$this->model, ' ' . strtolower($this->model), '$' . strtolower($this->model)], $data_file);
+                $data = str_replace([
+                    'Model',
+                    ' model',
+                    '$model',
+                    '->model'
+                ], [
+                    $this->model,
+                    ' ' . strtolower($this->model),
+                    '$' . strtolower($this->model),
+                    '->' . strtolower($this->model)
+                ], $data_file);
                 file_put_contents(base_path($new_file), $data);
             }
 
