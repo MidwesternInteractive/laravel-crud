@@ -20,7 +20,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "MWI\\LaravelCrud\\LaravelCrudServiceProvider"
+                "MWI\\LaravelCrud\\ServiceProvider"
             ]
         }
     }
