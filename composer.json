@@ -3,7 +3,7 @@
     "description": "MWI Crud setup for Laravel Projects",
     "keywords": ["CRUD", "laravel"],
     "license": "MIT",
-    "authros": [
+    "authors": [
         {
             "name": "Ryan Doss",
             "email": "rd@buildmidwestern.com"
