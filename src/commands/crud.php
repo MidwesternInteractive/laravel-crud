@@ -68,11 +68,15 @@ class Crud extends Command
             if (!file_exists(base_path($new_file))) {
                 $data = str_replace([
                     'Model',
+                    'extends Model',
+                    'Eloquent\Model',
                     ' model',
                     '$model',
                     '->model'
                 ], [
                     $this->model,
+                    'extends Model',
+                    'Eloquent\Model',
                     ' ' . strtolower($this->model),
                     '$' . strtolower($this->model),
                     '->' . strtolower($this->model)
