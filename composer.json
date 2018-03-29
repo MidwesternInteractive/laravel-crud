@@ -1,6 +1,7 @@
 {
     "name": "mwi/laravel-crud",
     "description": "MWI Crud setup for Laravel Projects",
+    "version": "2.0.0",
     "keywords": ["CRUD", "laravel"],
     "license": "MIT",
     "authors": [
