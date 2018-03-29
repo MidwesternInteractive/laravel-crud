@@ -3,10 +3,10 @@
 namespace App\Policies;
 
 use App\User;
-use App\Model;
+use App\TheModel;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class ModelPolicy
+class TheModelPolicy
 {
     use HandlesAuthorization;
 
@@ -29,7 +29,7 @@ class ModelPolicy
      * @param  \App\User  $model
      * @return mixed
      */
-    public function view(User $user, Model $model = null)
+    public function view(User $user, TheModel $model = null)
     {
         return $user->can('view model', $model);
     }
@@ -52,7 +52,7 @@ class ModelPolicy
      * @param  \App\User  $model
      * @return mixed
      */
-    public function update(User $user, Model $model = null)
+    public function update(User $user, TheModel $model = null)
     {
         return $user->can('update model', $model);
     }
@@ -64,7 +64,7 @@ class ModelPolicy
      * @param  \App\User  $model
      * @return mixed
      */
-    public function delete(User $user, Model $model)
+    public function delete(User $user, TheModel $model)
     {
         return $user->can('delete model', $model);
     }

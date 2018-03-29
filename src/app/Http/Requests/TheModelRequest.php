@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ModelRequest extends FormRequest
+class TheModelRequest extends FormRequest
 {
     /**
      * Determine if the session is authorized to make this request.
