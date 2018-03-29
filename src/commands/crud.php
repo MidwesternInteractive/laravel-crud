@@ -38,7 +38,9 @@ class Crud extends Command
         'app/Http/Controllers/{model}sController.php',
         'app/Http/Requests/{model}Request.php',
         'app/Policies/{model}Policy.php',
-        'app/Services/{model}Crud.php',
+        'app/Services/{model}Handler.php',
+        'app/Traits/{model}Helpers.php',
+        'app/Traits/{model}Management.php'
     ];
 
     /**
