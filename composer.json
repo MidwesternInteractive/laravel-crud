@@ -1,7 +1,7 @@
 {
     "name": "mwi/laravel-crud",
     "description": "MWI Crud setup for Laravel Projects",
-    "version": "v2.0.4",
+    "version": "v2.1.0",
     "keywords": ["CRUD", "laravel"],
     "license": "MIT",
     "authors": [
@@ -10,6 +10,9 @@
             "email": "rd@buildmidwestern.com"
         }
     ],
+    "require": {
+        "laravel/framework": "^5.3",
+    },
     "autoload": {
         "psr-4": { "MWI\\LaravelCrud\\": "src/" }
     },

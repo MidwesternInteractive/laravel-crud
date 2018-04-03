@@ -6,14 +6,9 @@ use App\Http\Requests\TheModelRequest;
 use App\Services\TheModelHandler;
 use App\TheModel;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
-use Yajra\DataTables\Html\Builder;
 
 class TheModelsController extends Controller
 {
-    // We'll house our model crud service here
-    private $theModelHandler;
-
     public function __construct(TheModelHandler $theModelHandler)
     {
         $this->theModelHandler = $theModelHandler;
@@ -28,9 +23,9 @@ class TheModelsController extends Controller
     {
         $this->authorize('view', TheModel::class);
 
-        $models = TheModel::all();
+        $the_models = TheModel::all();
 
-        return view('models.index', compact('models'));
+        return view('the-model.index', compact('the_models'));
     }
 
     /**
@@ -42,7 +37,7 @@ class TheModelsController extends Controller
     {
         $this->authorize('create', TheModel::class);
 
-        return view('models.create');
+        return view('the-model.create');
     }
 
     /**
@@ -57,7 +52,7 @@ class TheModelsController extends Controller
 
         $model = $this->theModelHandler->create($request);
 
-        return redirect()->route('models.show', $model);
+        return redirect()->route('the-model.show', $model);
     }
 
     /**
@@ -70,7 +65,7 @@ class TheModelsController extends Controller
     {
         $this->authorize('view', $model);
 
-        return view('models.show', compact('model'));
+        return view('the-model.show', compact('model'));
     }
 
     /**
@@ -83,7 +78,7 @@ class TheModelsController extends Controller
     {
         $this->authorize('update', $model);
 
-        return view('models.edit', compact('model'));
+        return view('the-model.edit', compact('model'));
     }
 
     /**

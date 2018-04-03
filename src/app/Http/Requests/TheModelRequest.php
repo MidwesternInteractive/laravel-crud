@@ -19,11 +19,11 @@ class TheModelRequest extends FormRequest
         }
         switch ($this->method()) {
             case 'POST':
-                return $this->user()->can('create user');
+                return $this->user()->can('create model');
                 break;
             case 'PUT':
             case 'PATCH':
-                return $this->user()->can('update user');
+                return $this->user()->can('update model');
                 break;
             default:
                 return $this->user()->hasRole('super admin');
