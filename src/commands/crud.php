@@ -15,7 +15,10 @@ class Crud extends Command
      * @option   {--no-migration} Exclude the migration from this CRUD
      * @var string
      */
-    protected $signature = 'mwi:crud {model} {--with} {--no-migration}';
+    protected $signature = 'mwi:crud
+                            {model : The name of the model to create}
+                            {--with : Specify what resources to include}
+                            {--no-migration : Do not include a migration with this CRUD}';
 
     /**
      * The console command description.
@@ -60,45 +63,54 @@ class Crud extends Command
      */
     public function handle()
     {
+        // Prompt user to specify resources required
         if ($this->option('with')) {
-            $this->comment('Available Resources: model controller handler policy request management helpers');
+            $this->comment('Available Resources: model, controller, handler, policy, request, management, helpers');
             $include = $this->ask('What would you like to include from the above options? Separate by spaces');
             $this->resources = explode(' ', $include);
         }
+
+        // Set the model name
         $this->model = $this->argument('model');
 
+        // Create the replacements array for the new files
+        $replacements = [
+            'TheModel' => $this->model,
+            'theModel' => lcfirst($this->model),
+            'the_model' => ltrim(strtolower(implode('_', preg_split('/(?=[A-Z])/', $this->model))), '_'),
+            'the-model' => ltrim(strtolower(implode('-', preg_split('/(?=[A-Z])/', $this->model))), '-'),
+            'the model' => ltrim(strtolower(implode(' ', preg_split('/(?=[A-Z])/', $this->model))), ' '),
+            'The Model' => ltrim(implode(' ', preg_split('/(?=[A-Z])/', $this->model)), ' ')
+        ];
+
+        // Create the migration
         if (! $this->option('no-migration')) {
             $this->call('make:migration', [
                 'name' => strtolower('create' . implode('_', preg_split('/(?=[A-Z])/', $this->model)) . '_table'),
-                '--table' => strtolower($this->model . 's')
+                '--create' => strtolower($this->model)
             ]);
         }
 
+        // Loop through each file and create an instance for the new model
         foreach ($this->files as $item => $file) {
+
+            // Skip if they didn't specify they needed the file
             if (is_array($this->resources) && ! in_array($item, $this->resources)) {
                 continue;
             }
+
+            // Create the new filename and get the data from our templates
             $new_file = str_replace('{model}', $this->model, $file);
             $data_file = file_get_contents(__DIR__."/../".str_replace('{model}', 'TheModel', $file));
 
+            // If the folder for the file doesn't exist create it
             if (!file_exists(dirname(base_path($new_file)))) {
                 mkdir(dirname(base_path($new_file)), 0777, true);
             }
 
+            // If the file doesn't already exist create it
             if (!file_exists(base_path($new_file))) {
-                $data = str_replace([
-                    'TheModel',
-                    'themodel',
-                    ' model',
-                    '$theModel',
-                    '->theModel'
-                ], [
-                    $this->model,
-                    strtolower($this->model),
-                    ' ' . strtolower($this->model),
-                    '$' . strtolower($this->model),
-                    '->' . strtolower($this->model)
-                ], $data_file);
+                $data = str_replace(array_keys($replacements), array_values($replacements), $data_file);
                 file_put_contents(base_path($new_file), $data);
             }
 

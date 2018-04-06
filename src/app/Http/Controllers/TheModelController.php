@@ -50,9 +50,9 @@ class TheModelsController extends Controller
     {
         $this->authorize('create', TheModel::class);
 
-        $model = $this->theModelHandler->create($request);
+        $the_model = $this->theModelHandler->create($request);
 
-        return redirect()->route('the-model.show', $model);
+        return redirect()->route('the-model.show', $the_model);
     }
 
     /**
@@ -61,11 +61,11 @@ class TheModelsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(TheModel $model)
+    public function show(TheModel $theModel)
     {
-        $this->authorize('view', $model);
+        $this->authorize('view', $theModel);
 
-        return view('the-model.show', compact('model'));
+        return view('the-model.show', compact('theModel'));
     }
 
     /**
@@ -74,11 +74,11 @@ class TheModelsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(TheModel $model)
+    public function edit(TheModel $theModel)
     {
-        $this->authorize('update', $model);
+        $this->authorize('update', $theModel);
 
-        return view('the-model.edit', compact('model'));
+        return view('the-model.edit', compact('theModel'));
     }
 
     /**
@@ -88,13 +88,13 @@ class TheModelsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(TheModelRequest $request, TheModel $model)
+    public function update(TheModelRequest $request, TheModel $theModel)
     {
-        $this->authorize('update', $model);
+        $this->authorize('update', $theModel);
 
-        $model = $this->theModelHandler->update($request, $model);
+        $this->theModelHandler->update($request, $theModel);
 
-        return redirect()->back()->with('success', 'TheModel Updated Successfully!');
+        return redirect()->back()->with('success', 'The Model Updated Successfully!');
     }
 
     /**
@@ -103,12 +103,12 @@ class TheModelsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TheModel $model)
+    public function destroy(TheModel $theModel)
     {
-        $this->authorize('delete', $model);
+        $this->authorize('delete', $theModel);
 
-        $model->delete();
+        $theModel->delete();
 
-        return $model;
+        return $theModel;
     }
 }

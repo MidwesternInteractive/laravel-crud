@@ -19,11 +19,11 @@ class TheModelRequest extends FormRequest
         }
         switch ($this->method()) {
             case 'POST':
-                return $this->user()->can('create model');
+                return $this->user()->can('create the model');
                 break;
             case 'PUT':
             case 'PATCH':
-                return $this->user()->can('update model');
+                return $this->user()->can('update the model');
                 break;
             default:
                 return $this->user()->hasRole('super admin');
@@ -46,7 +46,7 @@ class TheModelRequest extends FormRequest
         switch ($this->method()) {
             case 'POST':
                 return array_merge($rules, [
-                    'column_two' => 'required|unique:users',
+                    'column_two' => 'required|unique:the_model',
                 ]);
                 break;
             case 'PUT':
