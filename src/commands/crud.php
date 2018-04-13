@@ -11,12 +11,14 @@ class Crud extends Command
      * The name and signature of the console command.
      *
      * @argument {model}          The name of the model to create
+     * @argument {plural}         The plural of the models name
      * @option   {--with}         This will prompt the user to specify what to include
      * @option   {--no-migration} Exclude the migration from this CRUD
      * @var string
      */
     protected $signature = 'mwi:crud
                             {model : The name of the model to create}
+                            {plural : The plural of the models name}
                             {--with : Specify what resources to include}
                             {--no-migration : Do not include a migration with this CRUD}';
 
@@ -33,6 +35,13 @@ class Crud extends Command
      * @var string
      */
     private $model;
+
+    /**
+     * The plural of model
+     * 
+     * @var string
+     */
+    private $plural;
 
     /**
      * The resources to include
@@ -65,8 +74,7 @@ class Crud extends Command
     {
         // Set the model name
         $this->model = $this->argument('model');
-
-        $plural = $this->ask('What is the plural of ' . $this->model . '? (e.g. UserTerritory would be UserTerritories)');
+        $this->plural = $this->argument('plural');
 
         // Prompt user to specify resources required
         if ($this->option('with')) {
@@ -77,21 +85,21 @@ class Crud extends Command
 
         // Create the replacements array for the new files
         $replacements = [
+            'TheModels' => $this->plural,
+            'the-models' => ltrim(strtolower(implode('-', preg_split('/(?=[A-Z])/', $this->plural))), '-'),
+            'the_models' => ltrim(strtolower(implode('_', preg_split('/(?=[A-Z])/', $this->plural))), '_'),
             'TheModel' => $this->model,
             'theModel' => lcfirst($this->model),
             'the_model' => ltrim(strtolower(implode('_', preg_split('/(?=[A-Z])/', $this->model))), '_'),
             'the-model' => ltrim(strtolower(implode('-', preg_split('/(?=[A-Z])/', $this->model))), '-'),
             'the model' => ltrim(strtolower(implode(' ', preg_split('/(?=[A-Z])/', $this->model))), ' '),
-            'The Model' => ltrim(implode(' ', preg_split('/(?=[A-Z])/', $this->model)), ' '),
-            'TheModels' => $plural,
-            'the-models' => ltrim(strtolower(implode('-', preg_split('/(?=[A-Z])/', $plural))), '-'),
-            'the_models' => ltrim(strtolower(implode('_', preg_split('/(?=[A-Z])/', $plural))), '_')
+            'The Model' => ltrim(implode(' ', preg_split('/(?=[A-Z])/', $this->model)), ' ')
         ];
 
         // Create the migration
         if (! $this->option('no-migration')) {
             $this->call('make:migration', [
-                'name' => strtolower('create' . implode('_', preg_split('/(?=[A-Z])/', $plural)) . '_table'),
+                'name' => strtolower('create' . implode('_', preg_split('/(?=[A-Z])/', $this->plural)) . '_table'),
                 '--create' => strtolower($this->model)
             ]);
         }
