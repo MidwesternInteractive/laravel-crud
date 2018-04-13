@@ -63,6 +63,8 @@ class Crud extends Command
      */
     public function handle()
     {
+        $plural = $this->ask('What is the plural of ' . $this->model . '? (e.g. LogEntry would be LogEntries)');
+
         // Prompt user to specify resources required
         if ($this->option('with')) {
             $this->comment('Available Resources: model, controller, handler, policy, request, management, helpers');
@@ -80,13 +82,16 @@ class Crud extends Command
             'the_model' => ltrim(strtolower(implode('_', preg_split('/(?=[A-Z])/', $this->model))), '_'),
             'the-model' => ltrim(strtolower(implode('-', preg_split('/(?=[A-Z])/', $this->model))), '-'),
             'the model' => ltrim(strtolower(implode(' ', preg_split('/(?=[A-Z])/', $this->model))), ' '),
-            'The Model' => ltrim(implode(' ', preg_split('/(?=[A-Z])/', $this->model)), ' ')
+            'The Model' => ltrim(implode(' ', preg_split('/(?=[A-Z])/', $this->model)), ' '),
+            'TheModels' => $plural,
+            'the-models' => ltrim(strtolower(implode('-', preg_split('/(?=[A-Z])/', $plural))), '-'),
+            'the_models' => ltrim(strtolower(implode('_', preg_split('/(?=[A-Z])/', $plural))), '_')
         ];
 
         // Create the migration
         if (! $this->option('no-migration')) {
             $this->call('make:migration', [
-                'name' => strtolower('create' . implode('_', preg_split('/(?=[A-Z])/', $this->model)) . '_table'),
+                'name' => strtolower('create' . implode('_', preg_split('/(?=[A-Z])/', $plural)) . '_table'),
                 '--create' => strtolower($this->model)
             ]);
         }

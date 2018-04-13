@@ -25,6 +25,9 @@ class TheModelRequest extends FormRequest
             case 'PATCH':
                 return $this->user()->can('update the model');
                 break;
+            case 'DELETE':
+                return $this->user()->can('delete the model');
+                break;
             default:
                 return $this->user()->hasRole('super admin');
                 break;

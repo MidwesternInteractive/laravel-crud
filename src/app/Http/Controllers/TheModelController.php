@@ -7,7 +7,7 @@ use App\Services\TheModelHandler;
 use App\TheModel;
 use Illuminate\Http\Request;
 
-class TheModelsController extends Controller
+class TheModelController extends Controller
 {
     public function __construct(TheModelHandler $theModelHandler)
     {
@@ -25,7 +25,7 @@ class TheModelsController extends Controller
 
         $the_models = TheModel::all();
 
-        return view('the-model.index', compact('the_models'));
+        return view('the-models.index', compact('the_models'));
     }
 
     /**
@@ -37,7 +37,7 @@ class TheModelsController extends Controller
     {
         $this->authorize('create', TheModel::class);
 
-        return view('the-model.create');
+        return view('the-models.create');
     }
 
     /**
@@ -52,7 +52,7 @@ class TheModelsController extends Controller
 
         $the_model = $this->theModelHandler->create($request);
 
-        return redirect()->route('the-model.show', $the_model);
+        return redirect()->route('the-models.show', $the_model);
     }
 
     /**
@@ -65,7 +65,7 @@ class TheModelsController extends Controller
     {
         $this->authorize('view', $theModel);
 
-        return view('the-model.show', compact('theModel'));
+        return view('the-models.show', compact('theModel'));
     }
 
     /**
@@ -78,7 +78,7 @@ class TheModelsController extends Controller
     {
         $this->authorize('update', $theModel);
 
-        return view('the-model.edit', compact('theModel'));
+        return view('the-models.edit', compact('theModel'));
     }
 
     /**
