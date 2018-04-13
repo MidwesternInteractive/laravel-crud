@@ -66,7 +66,7 @@ class Crud extends Command
         // Set the model name
         $this->model = $this->argument('model');
 
-        $plural = $this->ask('What is the plural of ' . $this->model . '? (e.g. LogEntry would be LogEntries)');
+        $plural = $this->ask('What is the plural of ' . $this->model . '? (e.g. UserTerritory would be UserTerritories)');
 
         // Prompt user to specify resources required
         if ($this->option('with')) {
