@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\LogEntryRequest;
-use App\Services\LogEntryHandler;
-use App\LogEntry;
+use App\Http\Requests\TheModelRequest;
+use App\Services\TheModelHandler;
+use App\TheModel;
 use Illuminate\Http\Request;
 
-class LogEntryController extends Controller
+class TheModelController extends Controller
 {
-    public function __construct(LogEntryHandler $logEntryHandler)
+    public function __construct(TheModelHandler $theModelHandler)
     {
-        $this->logEntryHandler = $logEntryHandler;
+        $this->theModelHandler = $theModelHandler;
     }
 
     /**
@@ -21,11 +21,11 @@ class LogEntryController extends Controller
      */
     public function index()
     {
-        $this->authorize('view', LogEntry::class);
+        $this->authorize('view', TheModel::class);
 
-        $log_entries = LogEntry::all();
+        $the_models = TheModel::all();
 
-        return view('log-entries.index', compact('log_entries'));
+        return view('the-models.index', compact('the_models'));
     }
 
     /**
@@ -35,9 +35,9 @@ class LogEntryController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', LogEntry::class);
+        $this->authorize('create', TheModel::class);
 
-        return view('log-entries.create');
+        return view('the-models.create');
     }
 
     /**
@@ -46,13 +46,13 @@ class LogEntryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(LogEntryRequest $request)
+    public function store(TheModelRequest $request)
     {
-        $this->authorize('create', LogEntry::class);
+        $this->authorize('create', TheModel::class);
 
-        $log_entry = $this->logEntryHandler->store($request);
+        $the_model = $this->theModelHandler->store($request);
 
-        return redirect()->route('log-entries.show', $log_entry);
+        return redirect()->route('the-models.show', $the_model);
     }
 
     /**
@@ -61,11 +61,11 @@ class LogEntryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(LogEntry $logEntry)
+    public function show(TheModel $theModel)
     {
-        $this->authorize('view', $logEntry);
+        $this->authorize('view', $theModel);
 
-        return view('log-entries.show', compact('logEntry'));
+        return view('the-models.show', compact('theModel'));
     }
 
     /**
@@ -74,11 +74,11 @@ class LogEntryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(LogEntry $logEntry)
+    public function edit(TheModel $theModel)
     {
-        $this->authorize('update', $logEntry);
+        $this->authorize('update', $theModel);
 
-        return view('log-entries.edit', compact('logEntry'));
+        return view('the-models.edit', compact('theModel'));
     }
 
     /**
@@ -88,11 +88,11 @@ class LogEntryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(LogEntryRequest $request, LogEntry $logEntry)
+    public function update(TheModelRequest $request, TheModel $theModel)
     {
-        $this->authorize('update', $logEntry);
+        $this->authorize('update', $theModel);
 
-        $this->logEntryHandler->update($request, $logEntry);
+        $this->theModelHandler->update($request, $theModel);
 
         return redirect()->back()->with('success', 'Log Entry Updated Successfully!');
     }
@@ -103,12 +103,12 @@ class LogEntryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(LogEntry $logEntry)
+    public function destroy(TheModel $theModel)
     {
-        $this->authorize('delete', $logEntry);
+        $this->authorize('delete', $theModel);
 
-        $logEntry->delete();
+        $theModel->delete();
 
-        return $logEntry;
+        return $theModel;
     }
 }
