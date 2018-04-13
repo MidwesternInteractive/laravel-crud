@@ -3,11 +3,12 @@ We have put together a CRUD command. It will set up all the core files necessary
 
 For command help
 ```shell
-$ php artisan help mwi:crud
+$ php artisan -h mwi:crud
 ```
 
-First argument is the name of the model. This will also create a migration for the new model. If you'd prefer to not create the migration use the option `--no-migration`
-If you do not wish to include all resources you may use the `--with` option. This will prompt for you to specify which resources you need
+First argument is the name of the model. Second Argument is the plural version.
+This will also create a migration for the new model. If you'd prefer to not create the migration use the `--no-migration` option.
+If you do not wish to include all resources you may use the `--with` option. This will prompt for you to specify which resources you need.
 ```shell
-$ php artisan mwi:crud Store
+$ php artisan mwi:crud UserTerritory UserTerritories
 ```

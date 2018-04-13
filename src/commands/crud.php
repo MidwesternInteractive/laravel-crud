@@ -10,17 +10,18 @@ class Crud extends Command
     /**
      * The name and signature of the console command.
      *
-     * @argument {model}          The name of the model to create
-     * @argument {plural}         The plural of the models name
      * @option   {--with}         This will prompt the user to specify what to include
      * @option   {--no-migration} Exclude the migration from this CRUD
+     * @argument {model}          The name of the model to create
+     * @argument {plural}         The plural of the models name
+     *
      * @var string
      */
     protected $signature = 'mwi:crud
+                            {--with : Propmt to specify what resources to include}
+                            {--no-migration : Do not include a migration with this CRUD}
                             {model : The name of the model to create}
-                            {plural : The plural of the models name}
-                            {--with : Specify what resources to include}
-                            {--no-migration : Do not include a migration with this CRUD}';
+                            {plural : The plural of the models name}';
 
     /**
      * The console command description.
@@ -31,28 +32,28 @@ class Crud extends Command
 
     /**
      * The model to create the crud for
-     * 
+     *
      * @var string
      */
     private $model;
 
     /**
      * The plural of model
-     * 
+     *
      * @var string
      */
     private $plural;
 
     /**
      * The resources to include
-     * 
+     *
      * @var array
      */
     private $resources = false;
 
     /**
      * The files to be created
-     * 
+     *
      * @var array
      */
     private $files = [
