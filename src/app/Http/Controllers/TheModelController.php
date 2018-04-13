@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\TheModelRequest;
-use App\Services\TheModelHandler;
-use App\TheModel;
+use App\Http\Requests\LogEntryRequest;
+use App\Services\LogEntryHandler;
+use App\LogEntry;
 use Illuminate\Http\Request;
 
-class TheModelController extends Controller
+class LogEntryController extends Controller
 {
-    public function __construct(TheModelHandler $theModelHandler)
+    public function __construct(LogEntryHandler $logEntryHandler)
     {
-        $this->theModelHandler = $theModelHandler;
+        $this->logEntryHandler = $logEntryHandler;
     }
 
     /**
@@ -21,11 +21,11 @@ class TheModelController extends Controller
      */
     public function index()
     {
-        $this->authorize('view', TheModel::class);
+        $this->authorize('view', LogEntry::class);
 
-        $the_models = TheModel::all();
+        $log_entries = LogEntry::all();
 
-        return view('the-models.index', compact('the_models'));
+        return view('log-entries.index', compact('log_entries'));
     }
 
     /**
@@ -35,9 +35,9 @@ class TheModelController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', TheModel::class);
+        $this->authorize('create', LogEntry::class);
 
-        return view('the-models.create');
+        return view('log-entries.create');
     }
 
     /**
@@ -46,13 +46,13 @@ class TheModelController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TheModelRequest $request)
+    public function store(LogEntryRequest $request)
     {
-        $this->authorize('create', TheModel::class);
+        $this->authorize('create', LogEntry::class);
 
-        $the_model = $this->theModelHandler->create($request);
+        $log_entry = $this->logEntryHandler->store($request);
 
-        return redirect()->route('the-models.show', $the_model);
+        return redirect()->route('log-entries.show', $log_entry);
     }
 
     /**
@@ -61,11 +61,11 @@ class TheModelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(TheModel $theModel)
+    public function show(LogEntry $logEntry)
     {
-        $this->authorize('view', $theModel);
+        $this->authorize('view', $logEntry);
 
-        return view('the-models.show', compact('theModel'));
+        return view('log-entries.show', compact('logEntry'));
     }
 
     /**
@@ -74,11 +74,11 @@ class TheModelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(TheModel $theModel)
+    public function edit(LogEntry $logEntry)
     {
-        $this->authorize('update', $theModel);
+        $this->authorize('update', $logEntry);
 
-        return view('the-models.edit', compact('theModel'));
+        return view('log-entries.edit', compact('logEntry'));
     }
 
     /**
@@ -88,13 +88,13 @@ class TheModelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(TheModelRequest $request, TheModel $theModel)
+    public function update(LogEntryRequest $request, LogEntry $logEntry)
     {
-        $this->authorize('update', $theModel);
+        $this->authorize('update', $logEntry);
 
-        $this->theModelHandler->update($request, $theModel);
+        $this->logEntryHandler->update($request, $logEntry);
 
-        return redirect()->back()->with('success', 'The Model Updated Successfully!');
+        return redirect()->back()->with('success', 'Log Entry Updated Successfully!');
     }
 
     /**
@@ -103,12 +103,12 @@ class TheModelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TheModel $theModel)
+    public function destroy(LogEntry $logEntry)
     {
-        $this->authorize('delete', $theModel);
+        $this->authorize('delete', $logEntry);
 
-        $theModel->delete();
+        $logEntry->delete();
 
-        return $theModel;
+        return $logEntry;
     }
 }

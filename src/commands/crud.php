@@ -63,6 +63,9 @@ class Crud extends Command
      */
     public function handle()
     {
+        // Set the model name
+        $this->model = $this->argument('model');
+
         $plural = $this->ask('What is the plural of ' . $this->model . '? (e.g. LogEntry would be LogEntries)');
 
         // Prompt user to specify resources required
@@ -71,9 +74,6 @@ class Crud extends Command
             $include = $this->ask('What would you like to include from the above options? Separate by spaces');
             $this->resources = explode(' ', $include);
         }
-
-        // Set the model name
-        $this->model = $this->argument('model');
 
         // Create the replacements array for the new files
         $replacements = [
