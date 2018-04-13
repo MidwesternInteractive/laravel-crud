@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\TheModel;
+
 class TheModelHandler
 {
     public function store($request)
