@@ -11,7 +11,7 @@ class TheModelController extends Controller
 {
     public function __construct(TheModelHandler $theModelHandler)
     {
-        $this->theModelHandler = $theModelHandler;
+        $this->the_model_handler = $theModelHandler;
     }
 
     /**
@@ -50,7 +50,7 @@ class TheModelController extends Controller
     {
         $this->authorize('create', TheModel::class);
 
-        $the_model = $this->theModelHandler->store($request);
+        $the_model = $this->the_model_handler->store($request->input());
 
         return redirect()->route('the-models.show', $the_model);
     }
@@ -92,7 +92,7 @@ class TheModelController extends Controller
     {
         $this->authorize('update', $theModel);
 
-        $this->theModelHandler->update($request, $theModel);
+        $this->the_model_handler->update($request->input(), $theModel);
 
         return redirect()->back()->with('success', 'Log Entry Updated Successfully!');
     }

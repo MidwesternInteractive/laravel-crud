@@ -6,13 +6,13 @@ use App\TheModel;
 
 class TheModelHandler
 {
-    public function store($request)
+    public function store($data)
     {
-        return TheModel::create($request->input());
+        return TheModel::create($data);
     }
 
-    public function update($request, $theModel)
+    public function update($data, $theModel)
     {
-        $theModel->update($request->input());
+        $theModel->update($data);
     }
 }

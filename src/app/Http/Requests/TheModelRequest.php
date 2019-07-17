@@ -49,7 +49,7 @@ class TheModelRequest extends FormRequest
         switch ($this->method()) {
             case 'POST':
                 return array_merge($rules, [
-                    'column_two' => 'required|unique:the_model',
+                    'column_two' => 'required|unique:the_models',
                 ]);
                 break;
             case 'PUT':

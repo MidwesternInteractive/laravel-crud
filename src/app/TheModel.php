@@ -4,10 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\TheModelHelpers;
+use App\Traits\TheModelManagement;
 
 class TheModel extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes,
+        TheModelHelpers,
+        TheModelManagement;
 
     /**
      * The attributes that are mass assignable.
@@ -15,7 +19,7 @@ class TheModel extends Model
      * @var array
      */
     protected $fillable = [
-        'column_one', 'column_two',
+        'column_one'
     ];
 
     /**
@@ -23,7 +27,7 @@ class TheModel extends Model
      *
      * @var array
      */
-    protected $hidden = ['column_three'];
+    protected $hidden = ['column_one'];
 
     /**
      * Fields that should be treated as dates
@@ -31,4 +35,28 @@ class TheModel extends Model
      * @var array
      */
     protected $dates = ['deleted_at'];
+
+    /**
+     * Scopes
+     *
+     */
+
+
+    /**
+     * Relationships
+     *
+     */
+
+
+    /**
+     * Accessors
+     *
+     */
+
+
+    /**
+     * Mutators
+     *
+     */
+
 }
