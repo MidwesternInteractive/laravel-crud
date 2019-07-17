@@ -18,7 +18,7 @@ class Crud extends Command
      *
      * @var string
      */
-    protected $signature = 'mwi:crud
+    protected $signature = 'make:crud
                             {--no-migration : Do not include a migration with this CRUD}
                             {--with : Propmt to specify what resources to include}
                             {--api : Crete the resources for an API}
