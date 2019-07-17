@@ -19,9 +19,9 @@ class Crud extends Command
      * @var string
      */
     protected $signature = 'mwi:crud
-                            {--api : Crete the resources for an API}
-                            {--with : Propmt to specify what resources to include}
                             {--no-migration : Do not include a migration with this CRUD}
+                            {--with : Propmt to specify what resources to include}
+                            {--api : Crete the resources for an API}
                             {model : The name of the model to create}
                             {plural : The plural of the models name}';
 
@@ -83,9 +83,13 @@ class Crud extends Command
 
         // Prompt user to specify resources required
         if ($this->option('with')) {
-            $this->comment('Available Resources: model, controller, handler, policy, request, management, helpers');
+            $this->comment('Available Resources: model, controller, handler, policy, request, management, helpers, transformer');
             $include = $this->ask('What would you like to include from the above options? Separate by spaces.');
             $this->resources = explode(' ', $include);
+        }
+
+        if ($this->option('api')) {
+            $this->files['api'] = 'app/Http/Controllers/Api/{model}Controller.php';
         }
 
         // Create the replacements array for the new files
@@ -118,8 +122,12 @@ class Crud extends Command
                 continue;
             }
 
+            if ($this->option('api')) {
+
+            }
+
             // Create the new filename and get the data from our templates
-            $new_file = str_replace('{model}', $item == 'controller' && $this->option('api') ? 'Api/' . $this->model : $this->model, $file);
+            $new_file = str_replace('{model}', $this->model, $file);
             $data_file = file_get_contents(__DIR__."/../".str_replace('{model}', 'TheModel', $file));
 
             // If the folder for the file doesn't exist create it
