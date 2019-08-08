@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 
 class TheModelController extends ApiController
 {
+    protected $the_model_handler;
+
     public function __construct(TheModelHandler $theModelHandler)
     {
         $this->the_model_handler = $theModelHandler;
@@ -16,17 +18,15 @@ class TheModelController extends ApiController
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $this->safeCall(function() {
+        return $this->safeCall(function() {
             $this->authorize('view', TheModel::class);
 
             $the_models = TheModel::all();
 
-            return view('the-models.index', compact('the_models'));
+            return $the_models;
         });
     }
 
@@ -34,31 +34,31 @@ class TheModelController extends ApiController
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \App\TheModel
      */
     public function store(TheModelRequest $request)
     {
-        $this->safeCall(function() use ($request) {
+        return $this->safeCall(function() use ($request) {
             $this->authorize('create', TheModel::class);
 
             $the_model = $this->the_model_handler->store($request->input());
 
-            return redirect()->route('the-models.show', $the_model);
+            return $theModel;
         });
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  \App\TheModel  $theModel
+     * @return \App\TheModel
      */
     public function show(TheModel $theModel)
     {
-        $this->safeCall(function() use ($theModel) {
+        return $this->safeCall(function() use ($theModel) {
             $this->authorize('view', $theModel);
 
-            return view('the-models.show', compact('theModel'));
+            return $theModel;
         });
     }
 
@@ -66,29 +66,29 @@ class TheModelController extends ApiController
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  \App\TheModel  $theModel
+     * @return \App\TheModel
      */
     public function update(TheModelRequest $request, TheModel $theModel)
     {
-        $this->safeCall(function() use ($request, $theModel) {
+        return $this->safeCall(function() use ($request, $theModel) {
             $this->authorize('update', $theModel);
 
             $this->the_model_handler->update($request->input(), $theModel);
 
-            return redirect()->back()->with('success', 'Log Entry Updated Successfully!');
+            return $theModel;
         });
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  \App\TheModel  $theModel
+     * @return \App\TheModel
      */
     public function destroy(TheModel $theModel)
     {
-        $this->safeCall(function() use ($theModel) {
+        return $this->safeCall(function() use ($theModel) {
             $this->authorize('delete', $theModel);
 
             $theModel->delete();
