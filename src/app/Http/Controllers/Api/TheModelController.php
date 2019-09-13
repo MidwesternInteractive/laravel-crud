@@ -9,24 +9,20 @@ use Illuminate\Http\Request;
 
 class TheModelController extends ApiController
 {
-    protected $the_model_handler;
-
-    public function __construct(TheModelHandler $theModelHandler)
-    {
-        $this->the_model_handler = $theModelHandler;
-    }
-
     /**
      * Display a listing of the resource.
+     *
+     * @param  Request $request
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->safeCall(function() {
+        return $this->safeCall(function() use ($request) {
             $this->authorize('view', TheModel::class);
 
-            $the_models = TheModel::all();
+            $the_models = TheModelHandler::get($request->input());
 
-            return $the_models;
+            return fractal($the_models, new TheModelTransformer)->respond();
         });
     }
 
@@ -34,16 +30,16 @@ class TheModelController extends ApiController
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \App\TheModel
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
     public function store(TheModelRequest $request)
     {
         return $this->safeCall(function() use ($request) {
             $this->authorize('create', TheModel::class);
 
-            $the_model = $this->the_model_handler->store($request->input());
+            $the_model = TheModelHandler::store($request->input());
 
-            return $theModel;
+            return fractal($the_model, new TheModelTransformer)->respond();
         });
     }
 
@@ -51,14 +47,14 @@ class TheModelController extends ApiController
      * Display the specified resource.
      *
      * @param  \App\TheModel  $theModel
-     * @return \App\TheModel
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
     public function show(TheModel $theModel)
     {
         return $this->safeCall(function() use ($theModel) {
             $this->authorize('view', $theModel);
 
-            return $theModel;
+            return fractal($the_model, new TheModelTransformer)->respond();
         });
     }
 
@@ -67,16 +63,16 @@ class TheModelController extends ApiController
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\TheModel  $theModel
-     * @return \App\TheModel
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
     public function update(TheModelRequest $request, TheModel $theModel)
     {
         return $this->safeCall(function() use ($request, $theModel) {
             $this->authorize('update', $theModel);
 
-            $this->the_model_handler->update($request->input(), $theModel);
+            TheModelHandler::update($request->input(), $theModel);
 
-            return $theModel;
+            return fractal($the_model, new TheModelTransformer)->respond();
         });
     }
 
@@ -84,7 +80,7 @@ class TheModelController extends ApiController
      * Remove the specified resource from storage.
      *
      * @param  \App\TheModel  $theModel
-     * @return \App\TheModel
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
     public function destroy(TheModel $theModel)
     {
@@ -93,7 +89,7 @@ class TheModelController extends ApiController
 
             $theModel->delete();
 
-            return $theModel;
+            return fractal($the_model, new TheModelTransformer)->respond();
         });
     }
 }

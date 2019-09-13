@@ -35,15 +35,15 @@ class TheModelTransformer extends TransformerAbstract
     }
 
     /**
-     * Include Profile
+     * Include Relationship
      *
      * @param \App\TheModel $theModel
      * @return \League\Fractal\Resource\Item|null
      */
-    public function includeRelationship(TheModel $theModel)
-    {
-        if ($theModel->relationship) {
-            return $this->item($theModel->relationship, new RelationshipTransformer);
-        }
-    }
+    // public function includeRelationship(TheModel $theModel)
+    // {
+    //     if ($theModel->relationship) {
+    //         return $this->item($theModel->relationship, new RelationshipTransformer);
+    //     }
+    // }
 }

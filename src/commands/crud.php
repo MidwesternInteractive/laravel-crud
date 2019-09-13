@@ -109,7 +109,7 @@ class Crud extends Command
         if (! $this->option('no-migration')) {
             $this->call('make:migration', [
                 'name' => strtolower('create' . implode('_', preg_split('/(?=[A-Z])/', $this->plural)) . '_table'),
-                '--create' => strtolower($this->model)
+                '--create' => strtolower($this->plural)
             ]);
         }
 

@@ -31,7 +31,7 @@ class TheModelPolicy
      */
     public function view(User $user, TheModel $theModel = null)
     {
-        return $user->can('view the model', $theModel);
+        return $user->can('view the model');
     }
 
     /**
@@ -54,7 +54,7 @@ class TheModelPolicy
      */
     public function update(User $user, TheModel $theModel = null)
     {
-        return $user->can('update the model', $theModel);
+        return $user->can('update the model');
     }
 
     /**
@@ -66,6 +66,6 @@ class TheModelPolicy
      */
     public function delete(User $user, TheModel $theModel)
     {
-        return $user->can('delete the model', $theModel);
+        return $user->can('delete the model');
     }
 }

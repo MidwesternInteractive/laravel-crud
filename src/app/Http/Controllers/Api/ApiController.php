@@ -19,7 +19,8 @@ class ApiController extends Controller
         return response([
             'message' => $e->getMessage(),
             'file' => $e->getFile(),
-            'line' => $e->getLine()
+            'line' => $e->getLine(),
+            'errors' => method_exists($e, 'errors') ? $e->errors() : null,
         ], $code);
     }
 
@@ -30,12 +31,12 @@ class ApiController extends Controller
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      * @author
      */
-    public function safeCall(\Closure $function)
+    public function safeCall(\Closure $function, $code = 200)
     {
         try {
             return $function();
         } catch (\Exception $e) {
-            return $this->respond($e, 200);
+            return $this->respond($e, $code);
         }
     }
 }

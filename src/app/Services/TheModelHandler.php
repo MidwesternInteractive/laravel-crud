@@ -6,13 +6,18 @@ use App\TheModel;
 
 class TheModelHandler
 {
-    public function store($data)
+    public static function get($data)
+    {
+        return TheModel::all();
+    }
+
+    public static function store($data)
     {
         return TheModel::create($data);
     }
 
-    public function update($data, $theModel)
+    public static function update($data, $theModel)
     {
-        $theModel->update($data);
+        return $theModel->update($data);
     }
 }

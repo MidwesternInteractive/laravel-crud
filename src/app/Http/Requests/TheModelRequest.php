@@ -18,6 +18,9 @@ class TheModelRequest extends FormRequest
             return true;
         }
         switch ($this->method()) {
+            case 'GET':
+                return $this->user()->can('view the model');
+                break;
             case 'POST':
                 return $this->user()->can('create the model');
                 break;
