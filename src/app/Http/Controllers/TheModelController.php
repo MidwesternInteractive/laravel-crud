@@ -97,7 +97,7 @@ class TheModelController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  TheModel $theModel
-     * @return \Illuminate\Http\Response
+     * @return TheModel $theModel
      */
     public function destroy(TheModel $theModel)
     {

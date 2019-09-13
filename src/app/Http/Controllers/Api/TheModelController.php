@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\TheModelRequest;
 use App\Services\TheModelHandler;
 use App\TheModel;
+use App\Transformers\TheModelTransformer;
 use Illuminate\Http\Request;
 
 class TheModelController extends ApiController
@@ -29,7 +30,7 @@ class TheModelController extends ApiController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  TheModelRequest  $request
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
     public function store(TheModelRequest $request)
@@ -61,7 +62,7 @@ class TheModelController extends ApiController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  TheModelRequest  $request
      * @param  \App\TheModel  $theModel
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
