@@ -67,7 +67,13 @@ class Crud extends Command
         'request'           => 'app/Http/Requests/{model}Request.php',
         'management'        => 'app/Traits/{model}Management.php',
         'helpers'           => 'app/Traits/{model}Helpers.php',
-        'transformer'       => 'app/Transformers/{model}Transformer.php'
+        'transformer'       => 'app/Transformers/{model}Transformer.php',
+
+        // Views
+        'create'       => 'resources/views/{models}/create.blade.php',
+        'edit'       => 'resources/views/{models}/edit.blade.php',
+        'index'       => 'resources/views/{models}/index.blade.php',
+        'show'       => 'resources/views/{models}/show.blade.php',
     ];
 
     /**
@@ -95,10 +101,12 @@ class Crud extends Command
         // Create the replacements array for the new files
         $replacements = [
             'TheModels' => $this->plural,
+            'themodels' => ltrim(strtolower($this->plural)),
             'the-models' => ltrim(strtolower(implode('-', preg_split('/(?=[A-Z])/', $this->plural))), '-'),
             'the_models' => ltrim(strtolower(implode('_', preg_split('/(?=[A-Z])/', $this->plural))), '_'),
+            'themodel' => ltrim(strtolower($this->model)),
             'TheModel' => $this->model,
-            'theModel' => lcfirst($this->model)  ,
+            'theModel' => lcfirst($this->model),
             'the_model' => ltrim(strtolower(implode('_', preg_split('/(?=[A-Z])/', $this->model))), '_'),
             'the-model' => ltrim(strtolower(implode('-', preg_split('/(?=[A-Z])/', $this->model))), '-'),
             'the model' => ltrim(strtolower(implode(' ', preg_split('/(?=[A-Z])/', $this->model))), ' '),
@@ -113,7 +121,7 @@ class Crud extends Command
             ]);
         }
 
-        // Loop through each file and create an instance for the new model
+        // Loop through each resource and create an instance for the new model
         foreach ($this->files as $item => $file) {
 
             // Skip if they didn't specify they needed the file or if the file is api_controller with no API option
@@ -127,8 +135,13 @@ class Crud extends Command
             }
 
             // Create the new filename and get the data from our templates
-            $new_file = str_replace('{model}', $this->model, $file);
-            $data_file = file_get_contents(__DIR__."/../".str_replace('{model}', 'TheModel', $file));
+            $search = ['{model}', '{models}'];
+            $replace = [
+                $this->model,
+                ltrim(strtolower(implode('-', preg_split('/(?=[A-Z])/', $this->plural))), '-')
+            ];
+            $new_file = str_replace($search, $replace, $file);
+            $data_file = file_get_contents(__DIR__."/../".$new_file);
 
             // If the folder for the file doesn't exist create it
             if (! file_exists(dirname(base_path($new_file)))) {
@@ -143,6 +156,8 @@ class Crud extends Command
 
             $this->info($new_file . ' created');
         }
+
+        // Loop through each view and create an instance for the new model
 
         $this->comment($this->model . ' is all set up.');
     }
