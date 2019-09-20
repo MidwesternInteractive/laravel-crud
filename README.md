@@ -2,7 +2,16 @@
 We have put together a CRUD command. It will set up all the core files necessary to create a well put together CRUD. Routes and Views will need to be added separately given the complexity of some applications.
 
 The files included are:
-
+    - model
+    - controller
+    - API controller
+    - handler (service)
+    - policy
+    - request
+    - management (trait for additional route method)
+    - helpers (trait for manipulating data)
+    - transformer (for fractal with API)
+    - views (basic crud views)
 
 For command help
 ```shell
