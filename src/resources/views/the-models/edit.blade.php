@@ -5,7 +5,7 @@
         <div class="col-xl-12">
             <div class="panel">
                 <div class="panel-content">
-                    Profile Information
+                    The Model Form Component
                 </div>
             </div>
         </div>

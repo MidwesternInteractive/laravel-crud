@@ -5,7 +5,7 @@
         <div class="col-xl-12">
             <div class="panel">
                 <div class="panel-content">
-                    Crud Form Component
+                    The Model Information
                 </div>
             </div>
         </div>

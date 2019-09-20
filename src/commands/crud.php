@@ -70,10 +70,10 @@ class Crud extends Command
         'transformer'       => 'app/Transformers/{model}Transformer.php',
 
         // Views
-        'create'       => 'resources/views/{models}/create.blade.php',
-        'edit'       => 'resources/views/{models}/edit.blade.php',
         'index'       => 'resources/views/{models}/index.blade.php',
+        'create'       => 'resources/views/{models}/create.blade.php',
         'show'       => 'resources/views/{models}/show.blade.php',
+        'edit'       => 'resources/views/{models}/edit.blade.php',
     ];
 
     /**
@@ -89,13 +89,19 @@ class Crud extends Command
 
         // Prompt user to specify resources required
         if ($this->option('with')) {
-            $this->comment('Available Resources: model, controller, handler, policy, request, management, helpers, transformer');
-            $include = $this->ask('What would you like to include from the above options? Separate by spaces.');
+            $this->comment('Available Resources: model controller handler policy request management helpers transformer views');
+            $include = $this->ask('What would you like to include from the above options? Separate by spaces');
             $this->resources = explode(' ', $include);
         }
 
         if ($this->option('api')) {
             $this->files['api'] = 'app/Http/Controllers/Api/{model}Controller.php';
+        }
+
+        if (isset($this->resources) && in_array('views', $this->resources)) {
+            $key = array_search('views', $this->resources);
+            unset($this->resources[$key]);
+            $this->resources += ['index', 'create', 'show', 'edit'];
         }
 
         // Create the replacements array for the new files
@@ -125,13 +131,8 @@ class Crud extends Command
         foreach ($this->files as $item => $file) {
 
             // Skip if they didn't specify they needed the file or if the file is api_controller with no API option
-            if ((is_array($this->resources) && ! in_array($item, $this->resources))
-                || ($item == 'api_controller' && ! $this->option('api'))) {
+            if ((is_array($this->resources) && ! in_array($item, $this->resources)) || ($item == 'api_controller' && ! $this->option('api'))) {
                 continue;
-            }
-
-            if ($this->option('api')) {
-
             }
 
             // Create the new filename and get the data from our templates
@@ -141,7 +142,7 @@ class Crud extends Command
                 ltrim(strtolower(implode('-', preg_split('/(?=[A-Z])/', $this->plural))), '-')
             ];
             $new_file = str_replace($search, $replace, $file);
-            $data_file = file_get_contents(__DIR__."/../".$new_file);
+            $data_file = file_get_contents(__DIR__."/../".str_replace(['{model}', '{models}'], ['TheModel', 'the-models'], $file));
 
             // If the folder for the file doesn't exist create it
             if (! file_exists(dirname(base_path($new_file)))) {
