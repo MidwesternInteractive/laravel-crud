@@ -98,7 +98,7 @@ class Crud extends Command
             $this->files['api'] = 'app/Http/Controllers/Api/{model}Controller.php';
         }
 
-        if (isset($this->resources) && in_array('views', $this->resources)) {
+        if (is_array($this->resources) && in_array('views', $this->resources)) {
             $key = array_search('views', $this->resources);
             unset($this->resources[$key]);
             $this->resources += ['index', 'create', 'show', 'edit'];
