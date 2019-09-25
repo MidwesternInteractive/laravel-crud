@@ -68,12 +68,17 @@ class Crud extends Command
         'management'        => 'app/Traits/{model}Management.php',
         'helpers'           => 'app/Traits/{model}Helpers.php',
         'transformer'       => 'app/Transformers/{model}Transformer.php',
+        'factory'           => 'database/factories/{model}Factory.php',
 
         // Views
-        'index'       => 'resources/views/{models}/index.blade.php',
-        'create'       => 'resources/views/{models}/create.blade.php',
-        'show'       => 'resources/views/{models}/show.blade.php',
-        'edit'       => 'resources/views/{models}/edit.blade.php',
+        'index'             => 'resources/views/{models}/index.blade.php',
+        'create'            => 'resources/views/{models}/create.blade.php',
+        'show'              => 'resources/views/{models}/show.blade.php',
+        'edit'              => 'resources/views/{models}/edit.blade.php',
+
+        // Tests
+        'feature'           => 'tests/Feature/{model}Test.php',
+        'unit'              => 'tests/Unit/{model}Test.php',
     ];
 
     /**
@@ -89,7 +94,7 @@ class Crud extends Command
 
         // Prompt user to specify resources required
         if ($this->option('with')) {
-            $this->comment('Available Resources: model controller handler policy request management helpers transformer views');
+            $this->comment('Available Resources: model controller handler policy request management helpers transformer factory views tests');
             $include = $this->ask('What would you like to include from the above options? Separate by spaces');
             $this->resources = explode(' ', $include);
         }
@@ -98,11 +103,17 @@ class Crud extends Command
             $this->files['api'] = 'app/Http/Controllers/Api/{model}Controller.php';
         }
 
-        if (is_array($this->resources) && in_array('views', $this->resources)) {
-            $key = array_search('views', $this->resources);
-            unset($this->resources[$key]);
-            $this->resources += ['index', 'create', 'show', 'edit'];
+        if (is_array($this->resources)) {
+            if (in_array('views', $this->resources)) {
+                unset($this->resources[array_search('views', $this->resources)]);
+                $this->resources += ['index', 'create', 'show', 'edit'];
+            }
+            if (in_array('tests', $this->resources)) {
+                unset($this->resources[array_search('tests', $this->resources)]);
+                $this->resources += ['feature', 'unit'];
+            }
         }
+
 
         // Create the replacements array for the new files
         $replacements = [
