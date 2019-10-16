@@ -2,6 +2,7 @@
 We have put together a CRUD command. It will set up all the core files necessary to create a well put together CRUD. Routes and Views will need to be added separately given the complexity of some applications.
 
 The files included are:
+
 - model
 - controller
 - API controller
