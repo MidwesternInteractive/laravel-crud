@@ -133,8 +133,8 @@ class Crud extends Command
         // Create the migration
         if (! $this->option('no-migration')) {
             $this->call('make:migration', [
-                'name' => strtolower('create' . ltrim(strtolower(implode('_', preg_split('/(?=[A-Z])/', $this->plural))), '_') . '_table'),
-                '--create' => strtolower($this->plural)
+                'name' => strtolower('create_' . $replacements['the_models'] . '_table'),
+                '--create' => $replacements['the_models']
             ]);
         }
 
@@ -150,7 +150,7 @@ class Crud extends Command
             $search = ['{model}', '{models}'];
             $replace = [
                 $this->model,
-                ltrim(strtolower(implode('-', preg_split('/(?=[A-Z])/', $this->plural))), '-')
+                $replacements['the-models']
             ];
             $new_file = str_replace($search, $replace, $file);
             $data_file = file_get_contents(__DIR__."/../".str_replace(['{model}', '{models}'], ['TheModel', 'the-models'], $file));
