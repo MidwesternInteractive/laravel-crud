@@ -12,6 +12,7 @@ The files included are:
     - helpers (trait for manipulating data)
     - transformer (for fractal with API)
     - views (basic crud views)
+    - tests (feature and unit examples)
 
 For command help
 ```shell
